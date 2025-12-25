@@ -6,8 +6,8 @@ import {
   VolumeX,
   Maximize,
   Minimize,
-  Undo2,
-  Redo2
+  RotateCcw,
+  RotateCw
 } from 'lucide-react';
 import { Slider } from '@/components/ui/slider';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -486,15 +486,15 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
               {showCenterIcon === 'play' && <Play className="w-10 h-10 text-white" fill="white" />}
               {showCenterIcon === 'pause' && <Pause className="w-10 h-10 text-white" fill="white" />}
               {showCenterIcon === 'forward' && (
-                <div className="flex flex-col items-center">
-                  <Redo2 className="w-8 h-8 text-white" />
-                  <span className="text-white text-[10px] font-bold">10s</span>
+                <div className="flex items-center gap-1">
+                  <RotateCw className="w-8 h-8 text-white" />
+                  <span className="text-white text-sm font-bold">10</span>
                 </div>
               )}
               {showCenterIcon === 'backward' && (
-                <div className="flex flex-col items-center">
-                  <Undo2 className="w-8 h-8 text-white" />
-                  <span className="text-white text-[10px] font-bold">10s</span>
+                <div className="flex items-center gap-1">
+                  <span className="text-white text-sm font-bold">10</span>
+                  <RotateCcw className="w-8 h-8 text-white" />
                 </div>
               )}
             </div>
@@ -548,12 +548,13 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
             </span>
 
             {/* Center: Main controls - Compact */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <button
                 onClick={() => seekBackward(10)}
-                className="text-white active:scale-90 transition-transform"
+                className="text-white active:scale-90 transition-transform flex items-center"
               >
-                <Undo2 className="w-5 h-5" />
+                <span className="text-[10px] font-bold mr-0.5">10</span>
+                <RotateCcw className="w-5 h-5" />
               </button>
 
               <button
@@ -561,17 +562,18 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
                 className="text-white active:scale-90 transition-transform"
               >
                 {isPlaying ? (
-                  <Pause className="w-7 h-7" fill="white" />
+                  <Pause className="w-8 h-8" fill="white" />
                 ) : (
-                  <Play className="w-7 h-7" fill="white" />
+                  <Play className="w-8 h-8" fill="white" />
                 )}
               </button>
 
               <button
                 onClick={() => seekForward(10)}
-                className="text-white active:scale-90 transition-transform"
+                className="text-white active:scale-90 transition-transform flex items-center"
               >
-                <Redo2 className="w-5 h-5" />
+                <RotateCw className="w-5 h-5" />
+                <span className="text-[10px] font-bold ml-0.5">10</span>
               </button>
             </div>
 
@@ -634,15 +636,15 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
             {showCenterIcon === 'play' && <Play className="w-10 h-10 text-white" fill="white" />}
             {showCenterIcon === 'pause' && <Pause className="w-10 h-10 text-white" fill="white" />}
             {showCenterIcon === 'forward' && (
-              <div className="flex flex-col items-center">
-                <Redo2 className="w-8 h-8 text-white" />
-                <span className="text-white text-xs font-bold">10s</span>
+              <div className="flex items-center gap-1">
+                <RotateCw className="w-10 h-10 text-white" />
+                <span className="text-white text-lg font-bold">10</span>
               </div>
             )}
             {showCenterIcon === 'backward' && (
-              <div className="flex flex-col items-center">
-                <Undo2 className="w-8 h-8 text-white" />
-                <span className="text-white text-xs font-bold">10s</span>
+              <div className="flex items-center gap-1">
+                <span className="text-white text-lg font-bold">10</span>
+                <RotateCcw className="w-10 h-10 text-white" />
               </div>
             )}
           </div>
@@ -698,42 +700,38 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
         {/* Controls row */}
         <div className="flex items-center justify-between gap-2 px-3 pb-3">
           {/* Left controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {/* 10s Backward */}
             <button
               onClick={() => seekBackward(10)}
-              className="text-white hover:text-primary transition-colors p-1"
+              className="text-white hover:text-primary transition-colors p-1.5 flex items-center gap-0.5 bg-white/10 hover:bg-white/20 rounded"
               title="10 সেকেন্ড পিছনে (J)"
             >
-              <div className="relative">
-                <Undo2 className="w-6 h-6" />
-                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 text-[9px] font-bold">10</span>
-              </div>
+              <span className="text-xs font-bold">10</span>
+              <RotateCcw className="w-5 h-5" />
             </button>
 
             {/* Play/Pause */}
             <button
               onClick={togglePlay}
-              className="text-white hover:text-primary transition-colors p-1"
+              className="text-white hover:text-primary transition-colors p-1 mx-1"
               title={isPlaying ? 'বিরতি (K)' : 'চালান (K)'}
             >
               {isPlaying ? (
-                <Pause className="w-7 h-7" fill="currentColor" />
+                <Pause className="w-8 h-8" fill="currentColor" />
               ) : (
-                <Play className="w-7 h-7" fill="currentColor" />
+                <Play className="w-8 h-8" fill="currentColor" />
               )}
             </button>
 
             {/* 10s Forward */}
             <button
               onClick={() => seekForward(10)}
-              className="text-white hover:text-primary transition-colors p-1"
+              className="text-white hover:text-primary transition-colors p-1.5 flex items-center gap-0.5 bg-white/10 hover:bg-white/20 rounded"
               title="10 সেকেন্ড সামনে (L)"
             >
-              <div className="relative">
-                <Redo2 className="w-6 h-6" />
-                <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 text-[9px] font-bold">10</span>
-              </div>
+              <RotateCw className="w-5 h-5" />
+              <span className="text-xs font-bold">10</span>
             </button>
 
             {/* Volume */}
