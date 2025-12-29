@@ -55,8 +55,22 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
 
   const videoId = getVideoId(embedUrl);
 
-  // Load YouTube IFrame API
+  // Load YouTube IFrame API with preconnect for faster loading
   useEffect(() => {
+    // Add preconnect hints for faster YouTube loading
+    const addPreconnect = (href: string) => {
+      if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'preconnect';
+        link.href = href;
+        document.head.appendChild(link);
+      }
+    };
+    
+    addPreconnect('https://www.youtube.com');
+    addPreconnect('https://i.ytimg.com');
+    addPreconnect('https://www.google.com');
+
     const loadYouTubeAPI = () => {
       if (window.YT && window.YT.Player) {
         setApiLoaded(true);
@@ -66,6 +80,7 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
       if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
         const tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
+        tag.async = true;
         const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
       }
@@ -453,7 +468,7 @@ const VideoPlayer = ({ embedUrl, title }: VideoPlayerProps) => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const playbackRates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  const playbackRates = [1, 1.25, 1.5, 1.75, 2];
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   // Mobile Controls - Ultra Minimalist Single Line

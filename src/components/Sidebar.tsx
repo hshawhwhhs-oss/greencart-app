@@ -1,5 +1,6 @@
-import { BookOpen, FileText, Link as LinkIcon, GraduationCap, Facebook, Youtube, MessageCircle, Send } from 'lucide-react';
+import { BookOpen, FileText, Link as LinkIcon, GraduationCap, Facebook, Youtube, MessageCircle, Send, Calendar, HelpCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { APP_CONFIG } from '@/config/app';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -11,12 +12,17 @@ const Sidebar = () => {
     { to: '#resources', icon: GraduationCap, label: 'Resources' },
   ];
 
+  const externalLinks = [
+    { href: APP_CONFIG.externalLinks.admissionCalendar, icon: Calendar, label: 'Admission Calendar', color: 'text-orange-500' },
+    { href: APP_CONFIG.externalLinks.questionAnalysis, icon: HelpCircle, label: 'Question Analysis', color: 'text-purple-500' },
+  ];
+
   const socialLinks = [
-    { href: 'https://facebook.com/hsciantv', icon: Facebook, label: 'Facebook Page', color: 'text-blue-600' },
-    { href: 'https://facebook.com/groups/hsciantv', icon: Facebook, label: 'Facebook Group', color: 'text-blue-500' },
-    { href: 'https://youtube.com/@hsciantv', icon: Youtube, label: 'YouTube', color: 'text-red-500' },
-    { href: 'https://wa.me/+8801234567890', icon: MessageCircle, label: 'WhatsApp', color: 'text-green-500' },
-    { href: 'https://t.me/hsciantv', icon: Send, label: 'Telegram', color: 'text-blue-400' },
+    { href: APP_CONFIG.social.facebookPage, icon: Facebook, label: 'Facebook Page', color: 'text-blue-600' },
+    { href: APP_CONFIG.social.facebookGroup, icon: Facebook, label: 'Facebook Group', color: 'text-blue-500' },
+    { href: APP_CONFIG.social.youtube, icon: Youtube, label: 'YouTube', color: 'text-red-500' },
+    { href: APP_CONFIG.social.whatsapp, icon: MessageCircle, label: 'WhatsApp', color: 'text-green-500' },
+    { href: APP_CONFIG.social.telegram, icon: Send, label: 'Telegram', color: 'text-blue-400' },
   ];
 
   return (
@@ -32,6 +38,24 @@ const Sidebar = () => {
               <link.icon size={20} />
               <span className="text-sm">{link.label}</span>
             </Link>
+          ))}
+        </div>
+
+        <div className="border-t border-sidebar-border mx-3 my-2" />
+
+        <div className="p-3 space-y-1">
+          <p className="text-xs text-muted-foreground px-4 mb-2 font-medium">Useful Links</p>
+          {externalLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="sidebar-link"
+            >
+              <link.icon size={20} className={link.color} />
+              <span className="text-sm">{link.label}</span>
+            </a>
           ))}
         </div>
 
