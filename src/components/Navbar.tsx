@@ -13,8 +13,7 @@ const Navbar = () => {
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border h-14 flex items-center px-4">
         <div className="flex items-center justify-between w-full">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={APP_CONFIG.logo} alt={APP_CONFIG.name} className="h-8 w-8 rounded" />
+          <Link to="/" className="flex items-center">
             <span className="text-xl font-bold text-foreground">{APP_CONFIG.name}</span>
           </Link>
 
